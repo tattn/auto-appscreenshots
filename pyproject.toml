@@ -1,0 +1,91 @@
+[project]
+name = "auto-appscreenshots"
+version = "0.1.0"
+description = "App Store Connect screenshot generator"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pillow>=10.0.0",
+    "pyyaml>=6.0.0",
+    "click>=8.1.0",
+    "pydantic>=2.0.0",
+    "matplotlib>=3.5.0",
+    "fonttools>=4.50.0",
+    "numpy>=2.2.6",
+]
+
+[project.scripts]
+appscreenshots = "auto_appscreenshots.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+dev-dependencies = [
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "pytest-mock>=3.0.0",
+    "pytest-anyio>=0.0.0",
+    "types-PyYAML>=6.0.0",
+    "pyright>=1.0.0",
+    "types-pillow>=10.2.0.20240822",
+]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+extend-exclude = ["README.md"]
+
+[tool.ruff.lint]
+select = ["C4", "E", "F", "I", "PERF", "UP"]
+ignore = ["PERF203"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_any_unimported = false
+no_implicit_optional = true
+check_untyped_defs = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+
+[tool.pyright]
+typeCheckingMode = "strict"
+pythonVersion = "3.10"
+include = ["auto_appscreenshots", "tests", "examples"]
+exclude = [
+    "**/__pycache__",
+    "**/.pytest_cache",
+    "**/.mypy_cache",
+    "**/.ruff_cache",
+    "**/htmlcov",
+    "**/*.egg-info",
+]
+venvPath = "."
+venv = ".venv"
+
+# Execution environments
+executionEnvironments = [
+    { root = "tests", reportUnusedFunction = false, reportPrivateUsage = false },
+]
+
+# Type checking rules
+reportMissingTypeStubs = false
+reportImplicitStringConcatenation = false
+
+[tool.pytest.ini_options]
+log_cli = true
+xfail_strict = true
+addopts = """
+    --color=yes
+    --capture=fd
+"""
+filterwarnings = ["error"]

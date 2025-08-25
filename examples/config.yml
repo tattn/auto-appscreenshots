@@ -1,0 +1,95 @@
+# Output sizes - defaults to [1320x2868, 2064x2752] if not specified
+# output_sizes:
+#   - [1320, 2868]  # iPhone 15 Pro Max
+#   - [2064, 2752]  # iPad Pro 12.9"
+
+# Default language for fallback when specific language is not defined (default: en)
+default_language: en
+
+# Default preset theme to use (available: standard, standard_inverted)
+default_theme: standard
+
+# Shared configuration using YAML anchors
+_base_theme: &base_theme
+  text_area_height: 400
+  background_color: "#F5F5F5"
+  image_style:
+    corner_radius: [64, 64, 0, 0]
+    padding: 0
+  main_text_style: &main_text_style
+    font_family:
+      ja: "Hiragino Sans"
+      en: "Helvetica Neue"
+      zh-Hans: "STHeiti"
+    font_style: "normal"
+    font_weight: "heavy"
+    font_size: 120
+    color: "#1A1A1A"
+    # shadow: true
+    # shadow_color: "#00000040"
+    # shadow_offset: [3, 3]
+    # shadow_blur: 5
+  sub_text_style:
+    <<: *main_text_style
+    font_size: 80
+    font_weight: "normal"
+    color: "#666666"
+    shadow: false
+
+# Theme style customizations
+theme_styles:
+  # Standard theme customizations
+  standard:
+    <<: *base_theme
+    main_text_style:
+      <<: *main_text_style
+      offset:
+        en: [0, 50]
+
+  # Standard inverted theme customizations
+  standard_inverted:
+    <<: *base_theme
+    main_text_style:
+      <<: *main_text_style
+      offset:
+        en: [0, -30]
+
+# Screenshot definitions
+screenshots:
+  - input_image: "./screenshots/{lang}/1_{width}x{height}.png"
+    output_name: "01_home_{lang}_{width}x{height}"
+    text:
+      main_text:
+        ja: "シンプルで使いやすい"
+        en: "Simple and Easy to Use"
+        zh-Hans: "简单易用"
+      sub_text:
+        ja: "直感的なインターフェース"
+        en: "Intuitive Interface"
+        zh-Hans: "直观的界面"
+
+  - input_image: "./screenshots/{lang}/2_{width}x{height}.png"
+    output_name: "02_feature_{lang}_{width}x{height}"
+    theme: standard_inverted
+    text:
+      main_text:
+        ja: "パワフルな機能"
+        en: "Powerful Features"
+        zh-Hans: "强大的功能"
+      sub_text:
+        ja: "プロフェッショナルな結果"
+        en: "Professional Results"
+        zh-Hans: "专业的结果"
+
+  - input_image: "./screenshots/{lang}/3_{width}x{height}.png"
+    output_name: "03_settings_{lang}_{width}x{height}"
+    text:
+      main_text:
+        ja: "カスタマイズ自由自在"
+        en: "Fully Customizable"
+        zh-Hans: "完全可定制"
+    # Override specific styles for this screenshot
+    main_text_style:
+      offset:
+        default: [0, 10]
+        en: [0, 0]
